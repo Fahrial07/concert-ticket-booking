@@ -23,7 +23,7 @@ return new class extends Migration
             $table->datetime('concer_time');
             $table->date('open_date');
             $table->date('close_date');
-            $table->enum('is_open', [0, 1])->default(0);
+            $table->enum('is_active', [0, 1])->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

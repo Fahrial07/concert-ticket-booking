@@ -14,7 +14,11 @@ class LandingController extends Controller
      */
     public function index()
     {
-        //
+        $data = array(
+            'title' =>  'Home'  
+        );
+
+        return view('pages.landing.index', $data);
     }
 
     /**
