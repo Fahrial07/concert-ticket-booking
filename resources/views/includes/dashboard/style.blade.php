@@ -7,3 +7,5 @@
 <link href="{{ asset('dashboard/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
 <!-- App Css-->
 <link href="{{ asset('dashboard/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" href="{{ asset('DataTables/datatables.min.css') }}">

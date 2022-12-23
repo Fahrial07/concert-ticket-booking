@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Concer;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\TicketBooking;
 
 class DashboardController extends Controller
 {
@@ -15,7 +17,11 @@ class DashboardController extends Controller
     public function index()
     {
         $data = array(
-            'title' => 'Dashboard'
+            'title' => 'Dashboard',
+            'concer'    => Concer::orderBy('id', 'desc')->count(),
+            'booking'   => Concer::orderBy('id', 'desc')->count(),
+            'checkin'   => TicketBooking::where('status', '1')->count(),
+            'dcheckin'   => TicketBooking::where('status', '0')->count(),
         );
 
         return view('pages.admin.dashboard', $data);

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\ConcerController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\CheckInController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -41,12 +42,18 @@ Route::get('my_ticket/{id}', [BookingController::class, 'ticket'])->name('my.tic
 Route::get('print_my_ticket/{id}', [BookingController::class, 'cetak_ticket'])->name('print.ticket');
 Route::resource('search_my_ticket', SearchTicketController::class);
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
-    Route::resource('dashboard', DashboardController::class);
-    Route::resource('ticket_order', OrderController::class);
-    Route::resource('check_in', CheckInController::class);
-    Route::resource('report', ReportController::class);
+    Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+
+        Route::resource('dashboard', DashboardController::class);
+        Route::resource('ticket_order', OrderController::class);
+        Route::resource('check_in', CheckInController::class);
+        Route::resource('report', ReportController::class);
+        Route::resource('concer', ConcerController::class);
+
+    }
+    );
 
 });
 require __DIR__.'/auth.php';

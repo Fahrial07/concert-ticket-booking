@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Landing\Book;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\TicketBooking;
+use App\Http\Controllers\Controller;
 
 class SearchTicketController extends Controller
 {
@@ -12,9 +13,27 @@ class SearchTicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+
+
+
+        if($request->mail_or_phone != null)
+        {
+            $data = array(
+                'title' => 'Search Ticket',
+                'ticket' => TicketBooking::where('email', $request->mail_or_phone)->orWhere('phone',
+                $request->mail_or_phone)->first()
+            );
+
+            return view('pages.landing.search.index', $data);
+        } else {
+            $data = array(
+                'title' => 'Search Ticket',
+            );
+            return view('pages.landing.search.index', $data);
+        }
+
     }
 
     /**

@@ -52,7 +52,7 @@
                                     <tr>
                                         <td>Waktu Konser</td>
                                         <td>:</td>
-                                        <td>{{ Carbon\Carbon::parse($ticket->Concer->concer_time)->format('d, M Y H:i:s') }}</td>
+                                        <td>{{ Carbon\Carbon::parse($ticket->Concer->concer_time)->format('d, M Y') }}</td>
                                     </tr>
                                     <tr>
                                         <td>Tiket ID</td>

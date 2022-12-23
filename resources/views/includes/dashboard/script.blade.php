@@ -15,3 +15,5 @@
 <script src="{{ asset('dashboard/js/pages/dashboard.init.js') }}"></script>
 
 <script src="{{ asset('dashboard/js/app.js') }}"></script>
+
+<script src="{{ asset('DataTables/datatables.min.js') }}"></script>

@@ -18,7 +18,7 @@ class UserSeed extends Seeder
     {
         $user = [
                 'name' => 'Admin',
-                'email' => 'admi@gmai.com',
+                'email' => 'admin@gmail.com',
                 'roles'  => 1,
                 'password' => Hash::make('12345678'),
                 ];

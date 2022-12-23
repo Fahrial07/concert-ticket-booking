@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\TicketBooking;
+use App\Http\Controllers\Controller;
+use Alert;
 
 class CheckInController extends Controller
 {
@@ -14,7 +16,11 @@ class CheckInController extends Controller
      */
     public function index()
     {
-        //
+        $data = array(
+            'title' =>  'Check In',
+        );
+
+        return view('pages.admin.checkin.index', $data);
     }
 
     /**
@@ -35,7 +41,29 @@ class CheckInController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'ticketId'  =>  'required'
+        ]);
+
+        $check = TicketBooking::where('ticketId', $request->ticketId)->first();
+
+        if($check->status == '0' ){
+            $result = TicketBooking::where('ticketId', $request->ticketId)->update([
+                'status'    =>  '1'
+            ]);
+
+            if($result){
+                Alert::success('Success', 'Check In Success');
+                return redirect()->route('admin.check_in.index');
+            }else{
+                Alert::error('Error', 'Check In Failed');
+                return redirect()->route('admin.check_in.index');
+            }
+
+        } else {
+            Alert::error('Error', 'Ticket Already Check In');
+            return redirect()->route('admin.check_in.index');
+        }
     }
 
     /**

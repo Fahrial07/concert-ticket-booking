@@ -51,7 +51,7 @@
                             <p class="tm_m0_md">
                                 <b class="tm_primary_color tm_f16">{{ $ticket->Concer->concer_name }}</b> <br>
                                {{ $ticket->Concer->concer_place }}<br>
-                                {{ Carbon\Carbon::parse($ticket->Concer->concer_time)->format('d, M Y H:i:s') }} <br>
+                                {{ Carbon\Carbon::parse($ticket->Concer->concer_time)->format('d, M Y') }} <br>
                             </p>
                         </div>
                     </div>

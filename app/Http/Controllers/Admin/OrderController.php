@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use Alert;
+use App\Models\Concer;
 use Illuminate\Http\Request;
+use App\Models\TicketBooking;
+use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
@@ -14,7 +17,12 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $data = array(
+            'title' =>  'Order',
+            'concers'    =>  TicketBooking::orderBy('id', 'DESC')->get()
+        );
+
+        return view('pages.admin.book.index', $data);
     }
 
     /**
@@ -57,7 +65,7 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -69,7 +77,36 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name'  =>  'required',
+            'email' =>  'required',
+            'phone' =>  'required',
+            'status'    =>  'required',
+            'pob'   =>  'required',
+            'dob'   =>  'required',
+            'address'   =>  'required',
+        ]);
+
+        $data = array(
+            'name'  =>  $request->name,
+            'email' =>  $request->email,
+            'phone' =>  $request->phone,
+            'status'    =>  $request->status,
+            'pob'   =>  $request->pob,
+            'dob'   =>  $request->dob,
+            'address'   =>  $request->address,
+        );
+
+        $result = TicketBooking::where('id', $id)->update($data);
+
+        if($result){
+            Alert::success('Success', 'Data berhasil diubah');
+            return redirect()->route('admin.ticket_order.index');
+        } else{
+            Alert::error('Error', 'Data gagal diubah');
+            return redirect()->route('admin.ticket_order.index');
+        }
+
     }
 
     /**
@@ -80,6 +117,18 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $get = TicketBooking::where('id', $id)->first();
+
+        $result = TicketBooking::destroy($id);
+
+        Concer::where('id', $get->concer_id)->decrement('sold');
+
+        if($result){
+            Alert::success('Success', 'Data berhasil dihapus');
+            return redirect()->route('admin.ticket_order.index');
+        } else{
+            Alert::error('Error', 'Data gagal dihapus');
+            return redirect()->route('admin.ticket_order.index');
+        }
     }
 }
